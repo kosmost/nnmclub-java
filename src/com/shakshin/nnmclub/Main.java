@@ -185,20 +185,6 @@ public class Main {
                 System.err.println("Can not write configuration: " + e.getMessage());
             }
         }
-        /* Config cfg = Config.read();
 
-        Tracker trk  = new Tracker("vA2jvlzioy");
-        try {
-            for (Topic t : trk.getRSSTopics())
-                System.out.println(t.toString());
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        try {
-            cfg.write();
-        } catch (IOException e) {
-            System.err.println("Configuration save error: " + e.getMessage());
-        }
-        */
     }
 }
