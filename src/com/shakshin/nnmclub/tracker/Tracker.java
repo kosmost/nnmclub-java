@@ -13,10 +13,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.lang.Thread;
 
 public class Tracker {
     private final String baseURL ="https://nnm-club.name";
     private String passKey;
+
+    public int feedRetryCount = 60;
 
     public Tracker(String passKey) {
         this.passKey = passKey;
@@ -34,9 +37,17 @@ public class Tracker {
     public List<Topic> getRSSTopics() {
         ArrayList<Topic> list = new ArrayList<Topic>();
         RSSHelper rss = new RSSHelper();
-        try {
-            rss.parse(new HTTPHelper().getURLContent(baseURL + "/forum/rss2.php?h=1&uk=" + passKey));
-        } catch (Exception e) {}
+
+        int tryNo = 1;
+	while (rss.getItems() == null) {
+            try {
+                rss.parse(new HTTPHelper().getURLContent(baseURL + "/forum/rss2.php?h=1&uk=" + passKey));
+            } catch (Exception e) {}
+            if (tryNo++ > feedRetryCount) break;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {}
+        }
 
         if (rss.getItems() == null) {
             System.err.println("No items fetched from RSS");
