@@ -16,7 +16,7 @@ import java.util.List;
 import java.lang.Thread;
 
 public class Tracker {
-    private final String baseURL ="https://nnm-club.name";
+    private final String baseURL ="https://nnm-club.me";
     private String passKey;
 
     public int feedRetryCount = 60;
